@@ -13,6 +13,11 @@ CORS(app)
 
 dataService = DataService()
 
+@app.route("/ping", methods=["GET"])
+def ping():
+    return jsonify({'message': 'hi'})
+
+
 @app.route("/api/media/metadata", methods=["GET"])
 def getMetadata():
     url = request.args.get('url')
