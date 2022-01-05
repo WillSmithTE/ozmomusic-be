@@ -12,6 +12,7 @@ logging.root.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
 CORS(app)
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1000 * 1000 # max size 500 MB
 
 dataService = DataService()
 
