@@ -19,11 +19,13 @@ class DataService:
 
     def getMetadata(self, url):
         parsedUrl = UrlParser.soundcloud(url)
+        logging.debug("parsedUrl=%s", parsedUrl)
         return self.youtubeDl.extract_info(
             parsedUrl,
             download=False
         )
 
+# can save straight into io with this? https://github.com/ytdl-org/youtube-dl/issues/17379#issuecomment-521804927
     def downloadFile(self, url):
         parsedUrl = UrlParser.soundcloud(url)
         
@@ -33,5 +35,4 @@ class DataService:
         with youtube_dl.YoutubeDL(options) as ydl:
             metadata = ydl.extract_info(parsedUrl)
 
-        logging.debug("getFile (metadata=%s)", metadata)
         return filename, metadata
