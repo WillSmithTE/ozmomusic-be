@@ -1,2 +1,3 @@
 #!/bin/sh
-python3 main.py
+export LOCAL=True
+python3 app.py

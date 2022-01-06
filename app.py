@@ -57,5 +57,5 @@ def getFile():
         mimetype=mimetype
     )
 
-
-app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
+if os.environ.get("LOCAL") == "True":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
