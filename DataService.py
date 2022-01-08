@@ -31,7 +31,7 @@ class DataService:
         
         filename = str(uuid.uuid4())
 
-        options = {'outtmpl': filename}
+        options = {'outtmpl': filename, 'format': 'mp3'}
         with youtube_dl.YoutubeDL(options) as ydl:
             metadata = ydl.extract_info(parsedUrl)
 
