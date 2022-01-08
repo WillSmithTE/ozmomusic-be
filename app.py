@@ -52,7 +52,7 @@ def getFile():
 
     return send_file(
         data,
-        as_attachment=True,
+        as_attachment=False,
         download_name=extractor + "_" + songId + "." + extension,
         mimetype=mimetype
     )

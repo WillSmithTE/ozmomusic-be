@@ -5,7 +5,7 @@ service: serverless-flask
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
- 
+  - serverless-version-tracker
 custom:
   wsgi:
     app: app.app
