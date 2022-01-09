@@ -11,6 +11,7 @@ from contextlib import redirect_stdout
 from io import BytesIO
 import logging
 import uuid
+from contextlib import redirect_stdout
 
 class DataService:
 
@@ -25,14 +26,17 @@ class DataService:
             download=False
         )
 
-# can save straight into io with this? https://github.com/ytdl-org/youtube-dl/issues/17379#issuecomment-521804927
+# save into io thanks to this https://github.com/ytdl-org/youtube-dl/issues/17379#issuecomment-521804927
     def downloadFile(self, url):
         parsedUrl = UrlParser.soundcloud(url)
         
-        filename = str(uuid.uuid4())
+        options = { 'outtmpl': '-', 'format': 'mp3', 'logger': logging.getLogger()}
+        data = BytesIO()
 
-        options = {'outtmpl': filename, 'format': 'mp3'}
-        with youtube_dl.YoutubeDL(options) as ydl:
-            metadata = ydl.extract_info(parsedUrl)
+        with redirect_stdout(data):
+            with youtube_dl.YoutubeDL(options) as ydl:
+                metadata = ydl.extract_info(parsedUrl)
 
-        return filename, metadata
+        data.seek(0)
+
+        return data, metadata

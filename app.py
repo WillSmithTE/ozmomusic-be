@@ -34,17 +34,8 @@ def getFile():
     url = request.args.get('url')
     logging.info("getFile (url=%s)", url)
 
-    filePath, metadata = dataService.downloadFile(url)
-
-    data = io.BytesIO()
-    with open(filePath, 'rb') as fo:
-        data.write(fo.read())
-
-    # (after writing, cursor will be at last byte, so move it to start)
-    data.seek(0)
-
-    os.remove(filePath)
-
+    data, metadata = dataService.downloadFile(url)
+    logging.info("data=%s", data)
     extension = metadata.get("ext")
     mimetype = mimetypes.guess_extension(extension)
     extractor = metadata.get("extractor")
@@ -52,7 +43,7 @@ def getFile():
 
     return send_file(
         data,
-        as_attachment=False,
+        as_attachment=True,
         download_name=extractor + "_" + songId + "." + extension,
         mimetype=mimetype
     )
